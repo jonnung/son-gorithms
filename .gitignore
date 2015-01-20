@@ -1,0 +1,10 @@
+### Standard
+*.pyc
+*.ipynb
+venv/
+
+### Pycharm config
+.idea
+
+### IPythonNotebook template
+.ipynb_checkpoints/
