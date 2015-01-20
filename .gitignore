@@ -1,6 +1,5 @@
 ### Standard
 *.pyc
-*.ipynb
 venv/
 
 ### Pycharm config
