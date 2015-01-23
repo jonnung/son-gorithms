@@ -9,41 +9,21 @@ def find_friend(students, friends, case=0, prev=0):
             if another <= current or current < prev:
                 continue
             if (current, another,) in friends:
-                bind_people = next_students[:]
-                bind_people.remove(current)
-                bind_people.remove(another)
-                if bind_people:
-                    case = find_friend(bind_people, friends, case, current)
+                bind_students = next_students[:]
+                bind_students.remove(current)
+                bind_students.remove(another)
+                if bind_students:
+                    case = find_friend(bind_students, friends, case, current)
                 else:
                     return case+1
     return case
 
+if __name__ == '__main__':
+    std_input = lambda: sys.stdin.readline()
+    tc = int(std_input())
 
-stdin = lambda: sys.stdin.readline()
-test_case = int(stdin())
-
-for x in range(test_case):
-    students_and_couples = stdin()
-    students_count, couple_count = students_and_couples.split(' ', 1)
-
-    friend_list = []
-    friends = stdin()
-    for i, f in enumerate(friends.split(' ')):
-        couple = ()
-        if i % 2 == 0:
-            first = f.strip()
-            continue
-        else:
-            second = f.strip()
-            if not first:
-                raise Exception(u"First friend is nothing..")
-            if first > second:
-                couple = (int(second), int(first),)
-            elif first < second:
-                couple = (int(first), int(second),)
-            else:
-                raise Exception(u"Same people doesn't couple")
-            friend_list.append(couple)
-
-    student_list = range(int(students_count))
-    print(find_friend(student_list, friend_list))
+    for x in xrange(tc):
+        students_count, _ = std_input().split()
+        friends_list = [int(f) for f in std_input().split()]
+        couple_list = [tuple(sorted(d)) for d in zip(friends_list[::2], friends_list[1::2])]
+        print(find_friend(range(int(students_count)), couple_list))
