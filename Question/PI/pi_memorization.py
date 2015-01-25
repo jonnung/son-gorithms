@@ -22,6 +22,7 @@ def is_level5(l):
 if __name__ == '__main__':
     tc = int(raw_input())
     slice_list = [5, 4, 3]
+    cache = {}
 
     for x in xrange(tc):
         partial_pi = [int(i) for i in raw_input()]
@@ -29,8 +30,6 @@ if __name__ == '__main__':
         start = 0
         end = None
         last_seq = len(partial_pi)-1
-
-        cache = {}
         min_level = 0
 
         while True:
