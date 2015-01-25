@@ -56,13 +56,12 @@ if __name__ == '__main__':
                         level = 10
 
                     if level < 10:
-                        if read not in cache:
-                            cache[read] = level
                         max_end = end
                         break
                     else:
                         if end > max_end:
                             max_end = end
+                    cache[read] = level
                 else:
                     end = max_end
                     continue
