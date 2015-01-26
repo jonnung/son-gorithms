@@ -26,21 +26,27 @@ if __name__ == '__main__':
 
     for x in xrange(tc):
         partial_pi = [int(i) for i in raw_input()]
-
         start = 0
         end = None
         last_seq = len(partial_pi)-1
-        min_level = 0
+        total_level = 0
 
         while True:
             max_end = 0
             level = 0
+            step_by_level = {
+                3: 0,
+                4: 0,
+                5: 0
+            }
 
             for step in slice_list:
                 end = start + step
 
                 if (last_seq+1) - end >= 3 or (last_seq+1) - end == 0:
                     read = tuple(partial_pi[start:end])
+
+                    # print(tuple(input[start:end]))
 
                     if read in cache:
                         level = cache[read]
@@ -55,21 +61,22 @@ if __name__ == '__main__':
                     else:
                         level = 10
 
-                    if level < 10:
-                        max_end = end
-                        break
-                    else:
-                        if end > max_end:
-                            max_end = end
+                    step_by_level[step] = level
                     cache[read] = level
                 else:
-                    end = max_end
                     continue
+            filter_level = dict((k, v) for k, v in step_by_level.items() if v > 0)
+            min_level = min(filter_level.values())
 
-            min_level += level
-            start = max_end
+            if min_level < 10:
+                consider_step = max([int(s) for s, v in step_by_level.items() if v == min_level])
+            else:
+                consider_step = min(filter_level.keys())
 
-            if end >= (last_seq+1):
+            total_level += min_level
+            start = start + consider_step
+
+            if start >= (last_seq+1):
                 break
 
-        print(min_level)
+        print(total_level)
